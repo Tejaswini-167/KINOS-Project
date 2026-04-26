@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="kinosApp">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KINOS Virtual Physiotherapy Consultation Booking System</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Manrope', sans-serif;
+      background: #ffffff;
+      color: #222;
+      padding-bottom: 86px;
+    }
+
+    .navbar {
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+    }
+
+    .brand-text {
+      font-weight: 800;
+      color: #0072ff;
+    }
+
+    .top-ribbon {
+      background: linear-gradient(to right, #00c6ff, #0072ff);
+      color: white;
+      text-align: center;
+      padding: 10px 14px;
+      font-weight: 700;
+    }
+
+    .hero-section {
+      background: linear-gradient(135deg, #f2f8ff, #ffffff);
+      padding: 70px 0;
+    }
+
+    .hero-title {
+      font-size: clamp(2rem, 4vw, 4rem);
+      font-weight: 800;
+      line-height: 1.15;
+    }
+
+    .highlight {
+      color: #0072ff;
+    }
+
+    .hero-card {
+      background: white;
+      border-radius: 24px;
+      padding: 20px;
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.1);
+    }
+
+    .hero-card img {
+      width: 100%;
+      border-radius: 18px;
+    }
+
+    .rating-box {
+      background: #ffffff;
+      margin-top: -35px;
+      position: relative;
+      border-radius: 16px;
+      padding: 14px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+      text-align: center;
+    }
+
+    .stars {
+      color: #f5b50a;
+      font-size: 1.4rem;
+      letter-spacing: 2px;
+    }
+
+    .section-title {
+      font-weight: 800;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .underline {
+      width: 70px;
+      height: 4px;
+      background: linear-gradient(to right, #00c6ff, #0072ff);
+      border-radius: 10px;
+      margin: 0 auto 32px;
+    }
+
+    .feature-card,
+    .plan-card,
+    .booking-card,
+    .dashboard-card {
+      border: none;
+      border-radius: 22px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.07);
+      height: 100%;
+    }
+
+    .feature-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #eaf4ff;
+      color: #0072ff;
+      font-size: 1.6rem;
+      margin-bottom: 15px;
+    }
+
+    .countdown-box {
+      background: #111;
+      color: white;
+      border-radius: 16px;
+      padding: 18px 12px;
+      text-align: center;
+      min-width: 95px;
+    }
+
+    .countdown-number {
+      font-size: 1.8rem;
+      font-weight: 800;
+      display: block;
+    }
+
+    .btn-main {
+      background: linear-gradient(to right, #00c6ff, #0072ff);
+      color: white;
+      border: none;
+      font-weight: 800;
+      border-radius: 14px;
+      padding: 13px 22px;
+      box-shadow: 0 8px 20px rgba(0, 114, 255, 0.28);
+    }
+
+    .btn-main:hover {
+      color: white;
+      opacity: 0.92;
+    }
+
+    .form-control,
+    .form-select {
+      border-radius: 12px;
+      padding: 12px;
+    }
+
+    .pain-badge {
+      background: #eaf4ff;
+      color: #0072ff;
+      font-weight: 700;
+      border-radius: 20px;
+      padding: 5px 10px;
+      display: inline-block;
+    }
+
+    .status-badge {
+      border-radius: 20px;
+      padding: 6px 10px;
+      font-weight: 700;
+      font-size: 0.8rem;
+    }
+
+    .status-new {
+      background: #fff3cd;
+      color: #8a6500;
+    }
+
+    .status-confirmed {
+      background: #d1e7dd;
+      color: #0f5132;
+    }
+
+    .status-completed {
+      background: #cfe2ff;
+      color: #084298;
+    }
+
+    .sticky-footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #ffffff;
+      border-top: 1px solid #eaeaea;
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
+      z-index: 1000;
+      padding: 12px 0;
+    }
+
+    .sticky-price {
+      color: #0072ff;
+      font-size: 1.35rem;
+      font-weight: 800;
+    }
+
+    .sticky-price del {
+      color: #777;
+      font-size: 1rem;
+      margin-left: 8px;
+      font-weight: 600;
+    }
+
+    .small-muted {
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    .table-responsive {
+      border-radius: 18px;
+      overflow: hidden;
+    }
+
+    .required-star {
+      color: #dc3545;
+      font-weight: 800;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding-bottom: 125px;
+      }
+
+      .hero-section {
+        padding: 44px 0;
+      }
+
+      .sticky-footer .container {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+
+<body ng-controller="MainController">
+  <div class="top-ribbon">
+    30-MIN ONLINE PHYSIO CONSULTATION — TODAY ONLY @ ₹99/-
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg bg-white sticky-top">
+    <div class="container">
+      <a class="navbar-brand brand-text" href="#home">KINOS™</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto gap-lg-3">
+          <li class="nav-item"><a class="nav-link smooth-link" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link smooth-link" href="#features">Features</a></li>
+          <li class="nav-item"><a class="nav-link smooth-link" href="#plans">Plans</a></li>
+          <li class="nav-item"><a class="nav-link smooth-link" href="#booking">Book</a></li>
+          <li class="nav-item"><a class="nav-link smooth-link" href="#dashboard">Dashboard</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero-section" id="home">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-6">
+          <p class="fw-bold text-primary mb-2">India's Virtual Physiotherapy Consultation Platform</p>
+          <h1 class="hero-title">Join the <span class="highlight">Smart Recovery Revolution</span></h1>
+          <p class="lead mt-3">Get assessed by licensed physiotherapists from the comfort of your home. Book your consultation, share your pain details, and receive recovery guidance online.</p>
+          <div class="d-flex flex-wrap gap-3 mt-4">
+            <a href="#booking" class="btn btn-main smooth-link">Book Consultation</a>
+            <button class="btn btn-outline-primary rounded-4 fw-bold" data-bs-toggle="modal" data-bs-target="#caseStudyModal">View Case Study</button>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="hero-card">
+            <img src="https://fitnessfactory.fit/wp-content/uploads/2025/06/Consult-with-Dr.-Jeny-Abraham.jpg" alt="Online physiotherapy consultation">
+            <div class="rating-box mx-auto col-11">
+              <div class="stars">★★★★★</div>
+              <strong>70,000+</strong> people rated our consultations with <strong>4.96</strong> stars
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Countdown -->
+  <section class="py-5 bg-light">
+    <div class="container text-center">
+      <h2 class="section-title">Register Before Offer Ends</h2>
+      <div class="underline"></div>
+      <div class="d-flex flex-wrap justify-content-center gap-3">
+        <div class="countdown-box"><span class="countdown-number" id="days">00</span><small>DAYS</small></div>
+        <div class="countdown-box"><span class="countdown-number" id="hours">00</span><small>HOURS</small></div>
+        <div class="countdown-box"><span class="countdown-number" id="minutes">00</span><small>MINUTES</small></div>
+        <div class="countdown-box"><span class="countdown-number" id="seconds">00</span><small>SECONDS</small></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="py-5" id="features">
+    <div class="container">
+      <h2 class="section-title">What Happens When You Join?</h2>
+      <div class="underline"></div>
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-3" ng-repeat="feature in features">
+          <div class="card feature-card p-4">
+            <div class="feature-icon">{{feature.icon}}</div>
+            <h5 class="fw-bold">{{feature.title}}</h5>
+            <p class="mb-0 text-muted">{{feature.description}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Plans -->
+  <section class="py-5 bg-light" id="plans">
+    <div class="container">
+      <h2 class="section-title">Consultation Plans</h2>
+      <div class="underline"></div>
+      <div class="row g-4 justify-content-center">
+        <div class="col-md-6 col-lg-4" ng-repeat="plan in plans">
+          <div class="card plan-card p-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h4 class="fw-bold mb-0">{{plan.name}}</h4>
+              <span class="badge bg-primary fs-6">₹{{plan.price}}</span>
+            </div>
+            <ul class="list-unstyled">
+              <li class="mb-2" ng-repeat="item in plan.items">✓ {{item}}</li>
+            </ul>
+            <a href="#booking" class="btn btn-main w-100 smooth-link" ng-click="selectPlan(plan.name)">Choose {{plan.name}}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Booking Form -->
+  <section class="py-5" id="booking">
+    <div class="container">
+      <h2 class="section-title">Book Your Physio Consultation</h2>
+      <div class="underline"></div>
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="card booking-card p-4 p-md-5">
+            <form id="bookingForm" ng-submit="addBooking()" novalidate>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label fw-bold">Full Name <span class="required-star">*</span></label>
+                  <input type="text" class="form-control" id="name" ng-model="newBooking.name" placeholder="Enter your name" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label fw-bold">Mobile Number <span class="required-star">*</span></label>
+                  <input type="tel" class="form-control" id="phone" ng-model="newBooking.phone" placeholder="10-digit Indian number" required>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label fw-bold">Age <span class="required-star">*</span></label>
+                  <input type="number" class="form-control" id="age" ng-model="newBooking.age" min="5" max="100" required>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label fw-bold">Pain Area <span class="required-star">*</span></label>
+                  <select class="form-select" id="painArea" ng-model="newBooking.painArea" required>
+                    <option value="">Select pain area</option>
+                    <option>Neck Pain</option>
+                    <option>Back Pain</option>
+                    <option>Shoulder Pain</option>
+                    <option>Knee Pain</option>
+                    <option>Posture Issue</option>
+                    <option>Sports Injury</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label fw-bold">Pain Level <span class="required-star">*</span></label>
+                  <select class="form-select" id="painLevel" ng-model="newBooking.painLevel" required>
+                    <option value="">Select level</option>
+                    <option>Mild</option>
+                    <option>Moderate</option>
+                    <option>Severe</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label fw-bold">Preferred Slot <span class="required-star">*</span></label>
+                  <select class="form-select" id="slot" ng-model="newBooking.slot" required>
+                    <option value="">Select slot</option>
+                    <option>09:00 AM - 09:30 AM</option>
+                    <option>11:00 AM - 11:30 AM</option>
+                    <option>03:00 PM - 03:30 PM</option>
+                    <option>06:00 PM - 06:30 PM</option>
+                    <option>08:00 PM - 08:30 PM</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label fw-bold">Plan</label>
+                  <select class="form-select" ng-model="newBooking.plan">
+                    <option>KINOS One - ₹99</option>
+                    <option>KINOS Pro - ₹1999</option>
+                  </select>
+                </div>
+                <div class="col-12">
+                  <label class="form-label fw-bold">Brief Problem Description</label>
+                  <textarea class="form-control" rows="3" ng-model="newBooking.notes" placeholder="Example: Lower back pain while sitting for long hours"></textarea>
+                </div>
+                <div class="col-12 d-grid d-md-flex gap-3">
+                  <button type="submit" class="btn btn-main flex-fill">Save Booking</button>
+                  <button type="button" class="btn btn-success rounded-4 fw-bold flex-fill" ng-click="bookOnWhatsApp()">Book on WhatsApp</button>
+                  <button type="reset" class="btn btn-outline-secondary rounded-4 fw-bold" ng-click="resetForm()">Clear</button>
+                </div>
+              </div>
+            </form>
+            <div id="formMessage" class="alert mt-4 d-none"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dashboard -->
+  <section class="py-5 bg-light" id="dashboard">
+    <div class="container">
+      <h2 class="section-title">Admin Booking Dashboard</h2>
+      <div class="underline"></div>
+
+      <div class="row g-3 mb-4">
+        <div class="col-md-4">
+          <div class="card dashboard-card p-4 text-center">
+            <h3 class="fw-bold text-primary">{{bookings.length}}</h3>
+            <p class="mb-0">Total Bookings</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card dashboard-card p-4 text-center">
+            <h3 class="fw-bold text-success">{{confirmedCount()}}</h3>
+            <p class="mb-0">Confirmed</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card dashboard-card p-4 text-center">
+            <h3 class="fw-bold text-warning">{{newCount()}}</h3>
+            <p class="mb-0">New Requests</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card dashboard-card p-4">
+        <div class="row g-3 mb-3">
+          <div class="col-md-5">
+            <input type="text" class="form-control" ng-model="searchText" placeholder="Search by name, phone, pain area...">
+          </div>
+          <div class="col-md-4">
+            <select class="form-select" ng-model="filterPain">
+              <option value="">All Pain Areas</option>
+              <option>Neck Pain</option>
+              <option>Back Pain</option>
+              <option>Shoulder Pain</option>
+              <option>Knee Pain</option>
+              <option>Posture Issue</option>
+              <option>Sports Injury</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="col-md-3 d-grid">
+            <button class="btn btn-outline-danger rounded-4 fw-bold" ng-click="clearAllBookings()">Clear All</button>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0">
+            <thead class="table-primary">
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Age</th>
+                <th>Pain Area</th>
+                <th>Level</th>
+                <th>Slot</th>
+                <th>Plan</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="booking in bookings | filter:searchText | filter:painAreaFilter">
+                <td>{{$index + 1}}</td>
+                <td class="fw-bold">{{booking.name}}</td>
+                <td>{{booking.phone}}</td>
+                <td>{{booking.age}}</td>
+                <td><span class="pain-badge">{{booking.painArea}}</span></td>
+                <td>{{booking.painLevel}}</td>
+                <td>{{booking.slot}}</td>
+                <td>{{booking.plan}}</td>
+                <td>
+                  <select class="form-select form-select-sm" ng-model="booking.status" ng-change="saveBookings()">
+                    <option>New</option>
+                    <option>Confirmed</option>
+                    <option>Completed</option>
+                  </select>
+                </td>
+                <td>
+                  <button class="btn btn-sm btn-outline-primary rounded-3 mb-1" ng-click="viewBooking(booking)" data-bs-toggle="modal" data-bs-target="#bookingModal">View</button>
+                  <button class="btn btn-sm btn-outline-danger rounded-3 mb-1" ng-click="deleteBooking(booking.id)">Delete</button>
+                </td>
+              </tr>
+              <tr ng-if="bookings.length === 0">
+                <td colspan="10" class="text-center p-4 text-muted">No bookings yet. Add a booking using the form above.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Booking Modal -->
+  <div class="modal fade" id="bookingModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content rounded-4">
+        <div class="modal-header">
+          <h5 class="modal-title fw-bold">Booking Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body" ng-if="selectedBooking">
+          <p><strong>Name:</strong> {{selectedBooking.name}}</p>
+          <p><strong>Phone:</strong> {{selectedBooking.phone}}</p>
+          <p><strong>Age:</strong> {{selectedBooking.age}}</p>
+          <p><strong>Pain Area:</strong> {{selectedBooking.painArea}}</p>
+          <p><strong>Pain Level:</strong> {{selectedBooking.painLevel}}</p>
+          <p><strong>Preferred Slot:</strong> {{selectedBooking.slot}}</p>
+          <p><strong>Plan:</strong> {{selectedBooking.plan}}</p>
+          <p><strong>Status:</strong> {{selectedBooking.status}}</p>
+          <p><strong>Notes:</strong> {{selectedBooking.notes || 'No notes added'}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Case Study Modal -->
+  <div class="modal fade" id="caseStudyModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content rounded-4">
+        <div class="modal-header">
+          <h5 class="modal-title fw-bold">Real-Time Case Study</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <h5 class="fw-bold text-primary">Problem Statement</h5>
+          <p>Many patients delay physiotherapy because of travel, appointment waiting time, and lack of quick expert guidance. KINOS solves this by providing online consultation booking, pain-area collection, slot management, and booking tracking.</p>
+          <h5 class="fw-bold text-primary">Proposed Solution</h5>
+          <p>A responsive virtual physiotherapy booking system where users can view services, book a consultation, and admins can manage bookings through a dynamic dashboard.</p>
+          <h5 class="fw-bold text-primary">Technologies Used</h5>
+          <p>HTML, CSS, Bootstrap, JavaScript, jQuery, AngularJS, and localStorage.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sticky Footer -->
+  <footer class="sticky-footer">
+    <div class="container d-flex justify-content-between align-items-center">
+      <div>
+        <div class="sticky-price">₹99 <del>₹999</del></div>
+        <div class="small-muted">Offer ends in <span id="miniTimer">09:00</span> mins</div>
+      </div>
+      <a href="#booking" class="btn btn-main smooth-link">Book Your Spot</a>
+    </div>
+  </footer>
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- AngularJS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+  <script>
+    // jQuery features: smooth scrolling, form validation feedback, hover animation
+    $(document).ready(function () {
+      $('.smooth-link').on('click', function (event) {
+        const target = $(this.getAttribute('href'));
+        if (target.length) {
+          event.preventDefault();
+          $('html, body').animate({ scrollTop: target.offset().top - 76 }, 600);
+        }
+      });
+
+      $('.feature-card, .plan-card').hover(
+        function () { $(this).css('transform', 'translateY(-6px)').css('transition', '0.25s'); },
+        function () { $(this).css('transform', 'translateY(0)'); }
+      );
+
+      $('#phone').on('input', function () {
+        this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);
+      });
+    });
+
+    // JavaScript countdown timer for top offer
+    let miniMinutes = 9;
+    let miniSeconds = 0;
+
+    setInterval(function () {
+      if (miniSeconds === 0) {
+        if (miniMinutes === 0) return;
+        miniMinutes--;
+        miniSeconds = 59;
+      } else {
+        miniSeconds--;
+      }
+      document.getElementById('miniTimer').textContent = miniMinutes + ':' + (miniSeconds < 10 ? '0' : '') + miniSeconds;
+    }, 1000);
+
+    // JavaScript countdown for main timer
+    const targetTime = new Date().getTime() + (24 * 60 * 60 * 1000);
+
+    setInterval(function () {
+      const now = new Date().getTime();
+      const distance = targetTime - now;
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById('days').textContent = String(days).padStart(2, '0');
+      document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+      document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+      document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+    }, 1000);
+
+    // AngularJS application
+    const app = angular.module('kinosApp', []);
+
+    app.controller('MainController', function ($scope) {
+      $scope.features = [
+        {
+          icon: '📹',
+          title: 'Video Assessment',
+          description: 'Live online consultation with medical history, lifestyle review, and pain assessment.'
+        },
+        {
+          icon: '🧠',
+          title: 'Root Cause Check',
+          description: 'Understand the possible cause behind pain through expert physiotherapy screening.'
+        },
+        {
+          icon: '🧍',
+          title: 'Posture Screening',
+          description: 'On-camera posture and movement review for back, neck, shoulder, and knee issues.'
+        },
+        {
+          icon: '📄',
+          title: 'PDF Summary',
+          description: 'Get a simple digital summary with findings, suggestions, and next steps.'
+        }
+      ];
+
+      $scope.plans = [
+        {
+          name: 'KINOS One',
+          price: 99,
+          items: ['30-minute Zoom consultation', 'Basic pain assessment', 'Posture screening', 'PDF summary report']
+        },
+        {
+          name: 'KINOS Pro',
+          price: 1999,
+          items: ['Everything in KINOS One', 'Custom rehab plan', 'Exercise form review', '5 guided rehab sessions']
+        }
+      ];
+
+      $scope.newBooking = {
+        plan: 'KINOS One - ₹99'
+      };
+
+      $scope.bookings = JSON.parse(localStorage.getItem('kinosBookings')) || [];
+      $scope.selectedBooking = null;
+      $scope.searchText = '';
+      $scope.filterPain = '';
+
+      $scope.saveBookings = function () {
+        localStorage.setItem('kinosBookings', JSON.stringify($scope.bookings));
+      };
+
+      $scope.selectPlan = function (planName) {
+        if (planName === 'KINOS Pro') {
+          $scope.newBooking.plan = 'KINOS Pro - ₹1999';
+        } else {
+          $scope.newBooking.plan = 'KINOS One - ₹99';
+        }
+      };
+
+      function showMessage(type, message) {
+        const formMessage = $('#formMessage');
+        formMessage.removeClass('d-none alert-success alert-danger')
+          .addClass('alert-' + type)
+          .text(message)
+          .hide()
+          .fadeIn(300);
+
+        setTimeout(function () {
+          formMessage.fadeOut(300, function () {
+            formMessage.addClass('d-none');
+          });
+        }, 2800);
+      }
+
+      function validateBooking(booking) {
+        const phonePattern = /^[6-9]\d{9}$/;
+
+        if (!booking.name || booking.name.trim().length < 3) {
+          showMessage('danger', 'Please enter a valid name with at least 3 characters.');
+          return false;
+        }
+
+        if (!phonePattern.test(booking.phone || '')) {
+          showMessage('danger', 'Please enter a valid 10-digit Indian mobile number.');
+          return false;
+        }
+
+        if (!booking.age || booking.age < 5 || booking.age > 100) {
+          showMessage('danger', 'Please enter a valid age between 5 and 100.');
+          return false;
+        }
+
+        if (!booking.painArea || !booking.painLevel || !booking.slot) {
+          showMessage('danger', 'Please fill pain area, pain level, and preferred slot.');
+          return false;
+        }
+
+        return true;
+      }
+
+      $scope.addBooking = function () {
+        const booking = angular.copy($scope.newBooking);
+
+        if (!validateBooking(booking)) return;
+
+        booking.id = Date.now();
+        booking.status = 'New';
+        booking.createdAt = new Date().toLocaleString();
+
+        $scope.bookings.unshift(booking);
+        $scope.saveBookings();
+        showMessage('success', 'Booking saved successfully. Check dashboard below.');
+        $scope.resetForm();
+      };
+
+      $scope.bookOnWhatsApp = function () {
+        const booking = angular.copy($scope.newBooking);
+
+        if (!validateBooking(booking)) return;
+
+        const message = `Hi, I am ${booking.name}. I want to book a KINOS physiotherapy consultation. My mobile number is ${booking.phone}. Age: ${booking.age}. Pain area: ${booking.painArea}. Pain level: ${booking.painLevel}. Preferred slot: ${booking.slot}. Plan: ${booking.plan}. Notes: ${booking.notes || 'Not added'}. Please confirm my slot.`;
+        const whatsappNumber = '919052732344';
+        const whatsappURL = 'https://wa.me/' + whatsappNumber + '?text=' + encodeURIComponent(message);
+
+        window.open(whatsappURL, '_blank');
+      };
+
+      $scope.resetForm = function () {
+        $scope.newBooking = {
+          plan: 'KINOS One - ₹99'
+        };
+      };
+
+      $scope.deleteBooking = function (id) {
+        if (!confirm('Are you sure you want to delete this booking?')) return;
+        $scope.bookings = $scope.bookings.filter(function (booking) {
+          return booking.id !== id;
+        });
+        $scope.saveBookings();
+      };
+
+      $scope.clearAllBookings = function () {
+        if (!confirm('This will delete all saved bookings. Continue?')) return;
+        $scope.bookings = [];
+        $scope.saveBookings();
+      };
+
+      $scope.viewBooking = function (booking) {
+        $scope.selectedBooking = booking;
+      };
+
+      $scope.confirmedCount = function () {
+        return $scope.bookings.filter(function (booking) {
+          return booking.status === 'Confirmed';
+        }).length;
+      };
+
+      $scope.newCount = function () {
+        return $scope.bookings.filter(function (booking) {
+          return booking.status === 'New';
+        }).length;
+      };
+
+      $scope.painAreaFilter = function (booking) {
+        if (!$scope.filterPain) return true;
+        return booking.painArea === $scope.filterPain;
+      };
+    });
+  </script>
+</body>
+</html>
