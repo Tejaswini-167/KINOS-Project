@@ -767,7 +767,7 @@
         if (!validateBooking(booking)) return;
 
         const message = `Hi, I am ${booking.name}. I want to book a KINOS physiotherapy consultation. My mobile number is ${booking.phone}. Age: ${booking.age}. Pain area: ${booking.painArea}. Pain level: ${booking.painLevel}. Preferred slot: ${booking.slot}. Plan: ${booking.plan}. Notes: ${booking.notes || 'Not added'}. Please confirm my slot.`;
-        const whatsappNumber = '919052732344';
+        const whatsappNumber = '916361733176';
         const whatsappURL = 'https://wa.me/' + whatsappNumber + '?text=' + encodeURIComponent(message);
 
         window.open(whatsappURL, '_blank');
